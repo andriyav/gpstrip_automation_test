@@ -20,7 +20,7 @@ API_KEY_FOR_EMAILS=apilayerkey
 ```
 run pylint
 ```shell
-pylint ./SpaceToStudy
+pylint ./GpsTrip
 ```
 
 
