@@ -17,7 +17,7 @@ from tests.test_runners import BaseTestRunner
 class AuthorizedPageTestCase(TestRunnerWithTutor):
 
 
-    @allure.step('Verify that a Student can find a tutor by name at the welcoming block')
+    @allure.step('Verify that massage "Товар добавлено до корзини" appears after the item added to cart ')
     def test_add_product_to_cart_from_base_page_add_message(self):
         HeaderUnauthorizedComponent(self.driver).click_showroom_btn()
         BasePage(self.driver).get_discount_block().click()
@@ -28,7 +28,8 @@ class AuthorizedPageTestCase(TestRunnerWithTutor):
         self.assertEqual("Товар добавлено до корзини\n×", message)
 
     # test the message that the number of item is increased in case of repeatable adding to cart
-    @allure.step
+    @allure.step('Verify that massage "Кількість товару в корзині збільшена" appears after the item added to cart '
+                 'once again')
     def test_add_product_to_cart_from_base_page_increased_count(self):
         HeaderUnauthorizedComponent(self.driver).click_showroom_btn()
         BasePage(self.driver).get_discount_block().click()
@@ -39,6 +40,8 @@ class AuthorizedPageTestCase(TestRunnerWithTutor):
         HeaderUnauthorizedComponent(self.driver).get_del_btn().click()
         self.assertEqual("Кількість товару в корзині збільшена\n×", message)
 
+    @allure.step('Verify that massage "Товар було видалено з корзини" appears after the item removed form cart '
+                 'once again')
     def test_delete_product_from_header_cart(self):
         HeaderUnauthorizedComponent(self.driver).click_showroom_btn()
         BasePage(self.driver).get_discount_block().click()
@@ -50,6 +53,7 @@ class AuthorizedPageTestCase(TestRunnerWithTutor):
         text_del_message = HeaderUnauthorizedComponent(self.driver).get_del_message_txt().text
         self.assertEqual("Товар було видалено з корзини\n×", text_del_message)
 
+    @allure.step('Verify that the item was added to the favorites')
     def test_add_favorite(self):
         HeaderUnauthorizedComponent(self.driver).click_showroom_btn()
         BasePage(self.driver).get_discount_block().click()
@@ -62,7 +66,7 @@ class AuthorizedPageTestCase(TestRunnerWithTutor):
         self.assertEqual("GPS ТРЕКЕР TK108", text_in_favorite)
 
     # check number of favorites
-
+    @allure.step('Verify that the item was deleted from the favorites')
     def test_dell_favorite(self):
         HeaderUnauthorizedComponent(self.driver).click_showroom_btn()
         BasePage(self.driver).get_discount_block().click()
@@ -74,13 +78,13 @@ class AuthorizedPageTestCase(TestRunnerWithTutor):
         text_del_message = HeaderUnauthorizedComponent(self.driver).get_del_message_txt()
         self.assertEqual("Товар було видалено з улюблених\n×", text_del_message.text)
 
+    @allure.step('Verify that the favorites has count number')
     def test_number_favorite(self):
         HeaderUnauthorizedComponent(self.driver).get_favorite_btn_header().click()
         text_in_favorite = HeaderUnauthorizedComponent(self.driver).get_number_in_favorite()
         self.assertEqual("0", text_in_favorite.text)
 
-    # Check if the price in cart is displayed correctly
-
+    @allure.step('Verify that the price in cart is displayed correctly in orders page')
     def test_add_product_to_cart_check_price(self):
         HeaderUnauthorizedComponent(self.driver).get_shop_btn().click()
         BasePage(self.driver).get_product_ele_shop().click()
@@ -97,6 +101,7 @@ class AuthorizedPageTestCase(TestRunnerWithTutor):
         HeaderUnauthorizedComponent(self.driver).get_del_btn().click()
         self.assertEqual(price_item, price_order)
 
+    @allure.step('Verify that viewed items are shown on main page')
     def test_viewed(self):
         HeaderUnauthorizedComponent(self.driver).get_shop_btn().click()
         BasePage(self.driver).get_product_ele_shop().click()
@@ -105,6 +110,7 @@ class AuthorizedPageTestCase(TestRunnerWithTutor):
         text_viewed = BasePage(self.driver).get_viewed_item()
         self.assertEqual(text_item, text_viewed.text)
 
+    @allure.step('Verify that user can logout')
     def test_logout(self):
         HeaderUnauthorizedComponent(self.driver).get_logout_btn().click()
         text_account = HeaderUnauthorizedComponent(self.driver).get_authorisation_btn().text
@@ -113,7 +119,7 @@ class AuthorizedPageTestCase(TestRunnerWithTutor):
 
 class UnauthorizedPageTestCase(BaseTestRunner):
 
-
+    @allure.step('Verify that user can login')
     def test_login(self):
         (HeaderUnauthorizedComponent(self.driver).click_authorisation_btn())
         (LoginModal(self.driver).set_email("andriyav@hotmail.com"))
@@ -122,10 +128,12 @@ class UnauthorizedPageTestCase(BaseTestRunner):
         text_logout_btn = HeaderUnauthorizedComponent(self.driver).get_text_logout_btn()
         self.assertEqual(text_logout_btn, "Вийти")
 
+    @allure.step('Verify head text')
     def test_info_head(self):
         text_viewed = BasePage(self.driver).get_head_info_item().text
         self.assertEqual(text_viewed, "+38(096)1864719 andriyav@gmail.com Львів\nгрн. Обліковий запис")
 
+    @allure.step('Verify category search')
     def test_search_category(self):
         select_element = BasePage(self.driver).get_category_search()
         select = Select(select_element)
@@ -133,6 +141,7 @@ class UnauthorizedPageTestCase(BaseTestRunner):
         auto_link = BasePage(self.driver).get_search_element().text
         self.assertEqual(auto_link, "GPS трекер TK103B")
 
+    @allure.step('Verify that page ""Про нас" exists')
     def test_about_us(self):
         text_about_us = BasePage(self.driver).get_about_us().text
         self.assertEqual(text_about_us, "Про нас")
