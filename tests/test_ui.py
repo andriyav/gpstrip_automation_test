@@ -37,7 +37,7 @@ class AuthorizedPageTestCase(TestRunnerWithTutor):
         message = ProductPage(self.driver).get_success_add_cart_mess().text
         HeaderUnauthorizedComponent(self.driver).get_cart_btn().click()
         HeaderUnauthorizedComponent(self.driver).get_del_btn().click()
-        self.assertEqual("Кількість товару в корзині збільшена\n×", message)
+        self.assertEqual("Кількість товару в корзині збільшена1\n×", message)
 
     def test_delete_product_from_header_cart(self):
         HeaderUnauthorizedComponent(self.driver).click_showroom_btn()
