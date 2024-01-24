@@ -18,7 +18,13 @@ class BaseTestRunner(unittest.TestCase):
         self._init_driver()
 
     def _init_driver(self):
-        self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--disable-gpu')
+        # chrome_options.add_argument('--disable-web-security')
+        # chrome_options.add_argument('--disable-extensions')
+        chrome_options.add_argument('--window-size=1920x1080')
+        self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
         self.driver.implicitly_wait(IMPLICITLY_WAIT)
         self.driver.maximize_window()
         self.driver.get(ValueProvider.get_base_url())
