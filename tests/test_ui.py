@@ -1,6 +1,10 @@
 import re
 import time
 
+import allure
+import pytest
+from selenium.webdriver.support.ui import Select
+
 from GpsTrip.ui.pages.base_page import BasePage
 from GpsTrip.ui.pages.header.header_unauthorized_component import HeaderUnauthorizedComponent
 from GpsTrip.ui.pages.order.order import OrderPage
@@ -10,9 +14,10 @@ from GpsTrip.ui.pages.login_modal.login_modal import LoginModal
 from tests.test_runners import BaseTestRunner
 
 
-class CategoriesPageTestCase(TestRunnerWithTutor):
+class AuthorizedPageTestCase(TestRunnerWithTutor):
 
-    # test that item can be added to cart
+
+    @allure.step('Verify that a Student can find a tutor by name at the welcoming block')
     def test_add_product_to_cart_from_base_page_add_message(self):
         HeaderUnauthorizedComponent(self.driver).click_showroom_btn()
         BasePage(self.driver).get_discount_block().click()
@@ -23,6 +28,7 @@ class CategoriesPageTestCase(TestRunnerWithTutor):
         self.assertEqual("Товар добавлено до корзини\n×", message)
 
     # test the message that the number of item is increased in case of repeatable adding to cart
+    @allure.step
     def test_add_product_to_cart_from_base_page_increased_count(self):
         HeaderUnauthorizedComponent(self.driver).click_showroom_btn()
         BasePage(self.driver).get_discount_block().click()
@@ -105,8 +111,8 @@ class CategoriesPageTestCase(TestRunnerWithTutor):
         self.assertEqual(text_account, "Обліковий запис")
 
 
+class UnauthorizedPageTestCase(BaseTestRunner):
 
-class WelcomingBlockUI(BaseTestRunner):
 
     def test_login(self):
         (HeaderUnauthorizedComponent(self.driver).click_authorisation_btn())
@@ -115,3 +121,18 @@ class WelcomingBlockUI(BaseTestRunner):
         (LoginModal(self.driver).click_login_button())
         text_logout_btn = HeaderUnauthorizedComponent(self.driver).get_text_logout_btn()
         self.assertEqual(text_logout_btn, "Вийти")
+
+    def test_info_head(self):
+        text_viewed = BasePage(self.driver).get_head_info_item().text
+        self.assertEqual(text_viewed, "+38(096)1864719 andriyav@gmail.com Львів\nгрн. Обліковий запис")
+
+    def test_search_category(self):
+        select_element = BasePage(self.driver).get_category_search()
+        select = Select(select_element)
+        select.select_by_value('Автомобільний')
+        auto_link = BasePage(self.driver).get_search_element().text
+        self.assertEqual(auto_link, "GPS трекер TK103B")
+
+    def test_about_us(self):
+        text_about_us = BasePage(self.driver).get_about_us().text
+        self.assertEqual(text_about_us, "Про нас")

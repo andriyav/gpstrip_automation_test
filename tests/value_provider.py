@@ -42,9 +42,6 @@ class ValueProvider:
     def get_base_url(cls) -> str:
         return 'http://gpstrip.com.ua'
 
-    @classmethod
-    def get_api_key_for_emails(cls) -> str:
-        return os.getenv("API_KEY_FOR_EMAILS")
 
     @classmethod
     def get_base_api_url(cls) -> str:

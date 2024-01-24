@@ -9,6 +9,10 @@ BTN_PROD_SHOP = (
     By.CSS_SELECTOR, f'#store > div > div:nth-child([{random.randint(1, 9)}]) > div > div.add-to-cart > form > button')
 PRODUCT_ELEMENT_SHOP = (By.CSS_SELECTOR, f'#store > div > div:nth-child({random.randint(1, 9)}) > div > a')
 VIEWED_ITEM = (By.XPATH, "//*[@id='tab1']/div[1]/div/div/div/div[1]/h3/a[2]")
+HEAD_INFO = (By.ID, 'top-header')
+SEARCH_CATEGORY = (By.NAME, "drop")
+SEARCH_ELEMENT = (By.CSS_SELECTOR, "body > div.container > div > div > div > div:nth-child(1) > div > div > h3 > a")
+ABOUT_TEXT = (By.LINK_TEXT, "Про нас")
 
 
 class BasePage:
@@ -21,6 +25,10 @@ class BasePage:
         self.product_btn_shop = None
         self.product_ele_shop = None
         self.viewed_item = None
+        self.head_info_item = None
+        self.category_search = None
+        self.search_element = None
+        self.about_us = None
 
     def get_discount_block(self):  # gpstrip
         if not self.discount_block:
@@ -52,3 +60,23 @@ class BasePage:
         if not self.viewed_item:
             self.viewed_item = self.driver.find_element(*VIEWED_ITEM)
         return self.viewed_item
+
+    def get_head_info_item(self):  # gpstrip
+        if not self.head_info_item:
+            self.head_info_item = self.driver.find_element(*HEAD_INFO)
+        return self.head_info_item
+
+    def get_category_search(self):  # gpstrip
+        if not self.category_search:
+            self.category_search = self.driver.find_element(*SEARCH_CATEGORY)
+        return self.category_search
+
+    def get_search_element(self):  # gpstrip
+        if not self.search_element:
+            self.search_element = self.driver.find_element(*SEARCH_ELEMENT)
+        return self.search_element
+
+    def get_about_us(self):  # gpstrip
+        if not self.about_us:
+            self.about_us = self.driver.find_element(*ABOUT_TEXT)
+        return self.about_us

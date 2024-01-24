@@ -2,6 +2,7 @@ import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
+from GpsTrip.ui.elements.base_element import BaseElement
 from GpsTrip.ui.pages.base_page import BasePage
 
 PRODUCT_ADD_CART = (By.XPATH, '/html/body/div[2]/div/div/div[3]/div/form/div/button')
@@ -17,6 +18,8 @@ class ProductPage(BasePage):
 
     def get_product_add_to_cart_btn(self) -> WebElement:  # gpstrip
         return self.driver.find_element(*PRODUCT_ADD_CART)
+
+
 
     def get_success_add_cart_mess(self) -> WebElement:  # gpstrip
         return self.driver.find_element(*SUCCESS_ADD_CART_MESS)
