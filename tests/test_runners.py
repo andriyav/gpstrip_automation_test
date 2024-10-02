@@ -26,7 +26,7 @@ class BaseTestRunner(unittest.TestCase):
         chrome_options.add_argument("--disable-popup-blocking")
         # chrome_options.add_argument('--disable-web-security')
         # chrome_options.add_argument('--disable-extensions')
-        # chrome_options.add_argument('--window-size=1920x1080')
+        chrome_options.add_argument('--window-size=1920x1080')
 
         self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.implicitly_wait(IMPLICITLY_WAIT)
