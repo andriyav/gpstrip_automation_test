@@ -28,7 +28,7 @@ class BaseTestRunner(unittest.TestCase):
         # chrome_options.add_argument('--disable-extensions')
         # chrome_options.add_argument('--window-size=1920x1080')
 
-        chrome_options.add_argument("--headless")
+        # chrome_options.add_argument("--headless")
         chrome_options.add_argument('--window-size=1920x1080')
         # chrome_options.add_argument('--window-size=1920x1080')
         # chrome_options.add_argument("--no-sandbox")
@@ -37,7 +37,7 @@ class BaseTestRunner(unittest.TestCase):
 
         self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.implicitly_wait(IMPLICITLY_WAIT)
-        self.driver.maximize_window()
+        # self.driver.maximize_window()
         self.driver.get(ValueProvider.get_base_url())
 
     def _login(self, email: str, password: str):
